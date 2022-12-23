@@ -5,11 +5,14 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-    "build": "tsc",
+    "prebuild": "npm run clear && tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "webpack",
     "postbuild": "npm run test",
     "prestart": "npm run build",
-    "start": "node ."
+    "start": "node .",
+    "dev": "tsc",
+    "postdev": "node dist/index.js",
+    "clear": "rm -r dist/* || true"
   },
   "repository": {
     "type": "git",
@@ -29,8 +32,14 @@
     "chai": "^4.3.7",
     "express": "^4.18.2",
     "mocha": "^10.2.0",
+    "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
     "tslint": "^6.1.3",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "devDependencies": {
+    "webpack-node-externals": "^3.0.0"
   }
 }
