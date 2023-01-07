@@ -1,12 +1,24 @@
-import express from "express";
+import express, { Request, Response } from "express";
+
+import { init } from "./connection";
+import { routesV1 } from "./routesV1";
+
+const PORT = 7174;
 
 const app = express();
-const port = 7174;
 
-app.get("/", (req, res) => {
-  res.send("Hello world!");
-});
+app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`server started at https://localhost:${port}.`);
-});
+(async () => {
+  init();
+
+  app.listen(PORT, () => {
+    console.log(`Server is connected at localhost ${PORT}`);
+  });
+
+  app.use("/api/v1", routesV1);
+
+  app.get("/", (req: Request, res: Response) => {
+    res.send("Hello!");
+  });
+})();
